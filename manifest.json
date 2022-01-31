@@ -3,11 +3,6 @@
   "name": "LBA Packager",
   "icons": [
     {
-      "src": "logo24.png",
-      "type": "image/png",
-      "sizes": "24x24"
-    },
-    {
       "src": "logo200.png",
       "type": "image/png",
       "sizes": "200x200"
