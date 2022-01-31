@@ -3,6 +3,7 @@
 import React from 'react';
 import {
   Button,
+  Link,
   Chip,
   Typography,
   Stack,
@@ -18,6 +19,7 @@ import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { HQRInfo, showOpenHQRFileDialog } from './file-dialog';
 import { HQREntry } from '@lbalab/hqr';
 
@@ -182,6 +184,17 @@ export default function Viewer() {
                   </Typography>
                   <Typography variant="body1" align="center">
                     Click the button above to open a HQR, VOX, ILE or OBL file.
+                    <br />
+                    <br />
+                    <Link
+                      href="https://github.com/LBALab/lba-packager"
+                      underline="none"
+                      target="_blank"
+                    >
+                      <Button endIcon={<GitHubIcon />} variant="outlined">
+                        Contribute
+                      </Button>
+                    </Link>
                   </Typography>
                 </TableCell>
               </TableRow>
