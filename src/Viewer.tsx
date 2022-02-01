@@ -41,7 +41,7 @@ const TableCell = styled(TableCellMUI)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     borderRight: `1px solid ${theme.palette.divider}`,
-    '&:first-child': {
+    '&:first-of-type': {
       borderLeft: `1px solid ${theme.palette.divider}`,
     },
   },
