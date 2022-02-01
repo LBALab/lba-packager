@@ -21,7 +21,7 @@ import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { HQRInfo, showOpenHQRFileDialog } from './file-dialog';
-import { HQREntry } from '@lbalab/hqr';
+import { compressionRatio, humanFileSize } from './utils';
 
 const compressionTypes = ['NONE', 'LZSS/1', 'LZSS/2'];
 
@@ -56,36 +56,6 @@ const TableRow = styled(TableRowMUI)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
 }));
-
-function humanFileSize(bytes: number, dp = 1): string {
-  const thresh = 1000;
-
-  if (Math.abs(bytes) < thresh) {
-    return `${bytes} bytes`;
-  }
-
-  const units = ['KB', 'MB', 'GB'];
-  let u = -1;
-  const r = 10 ** dp;
-
-  do {
-    bytes /= thresh;
-    ++u;
-  } while (
-    Math.round(Math.abs(bytes) * r) / r >= thresh &&
-    u < units.length - 1
-  );
-
-  return `${bytes.toFixed(dp)} ${units[u]}`;
-}
-
-function compressionRatio(entry: HQREntry): string {
-  if (entry.metadata.compressedSize && entry.metadata.originalSize) {
-    const ratio = entry.metadata.compressedSize / entry.metadata.originalSize;
-    return `${Math.round(ratio * 100)}% of original size`;
-  }
-  return 'N/A';
-}
 
 export default function Viewer() {
   const [hqr, setHQR] = React.useState<HQRInfo | null>(null);
