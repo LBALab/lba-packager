@@ -1,9 +1,6 @@
 import { HQR } from '@lbalab/hqr';
-
-export interface HQRInfo {
-  hqr: HQR;
-  filename: string;
-}
+import { HQRInfo } from '../types';
+import { getMetadataForHQR } from './metadata';
 
 export async function showOpenHQRFileDialog(): Promise<HQRInfo | null> {
   let buffer: ArrayBuffer | null = null;
@@ -23,7 +20,8 @@ export async function showOpenHQRFileDialog(): Promise<HQRInfo | null> {
   filename = file.name;
   if (buffer) {
     const hqr = HQR.fromArrayBuffer(buffer);
-    return { hqr, filename };
+    const metadata = await getMetadataForHQR(filename, hqr);
+    return { hqr, filename, metadata };
   }
   return null;
 }

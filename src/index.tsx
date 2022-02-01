@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Viewer from './Viewer';
+import Viewer from './components/Viewer';
 import './index.css';
 
 ReactDOM.render(
