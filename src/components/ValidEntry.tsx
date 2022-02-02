@@ -4,7 +4,7 @@ import { Tooltip } from '@mui/material';
 import { CompressionType, HQREntryBase } from '@lbalab/hqr';
 import { HQRInfo } from '../types';
 import { compressionRatio, humanFileSize } from '../utils';
-import { TableCell } from './style/styled-components';
+import { EntryTableRow, TableCell } from './style/styled-components';
 import EntryType from './EntryType';
 import { DataTypes } from '../services/metadata';
 
@@ -25,7 +25,8 @@ export default function ValidEntry({
 }: Props) {
   const { metadata } = hqrInfo;
   return (
-    <>
+    <EntryTableRow>
+      <TableCell>{index}</TableCell>
       <TableCell align="right">{entry.metadata.offset}</TableCell>
       {entry.type === CompressionType.NONE ? (
         <>
@@ -51,6 +52,6 @@ export default function ValidEntry({
         <EntryType metadata={metadata?.entries[index]} dataTypes={dataTypes} />
       </TableCell>
       <TableCell>{metadata?.entries[index]?.description}</TableCell>
-    </>
+    </EntryTableRow>
   );
 }

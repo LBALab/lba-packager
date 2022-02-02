@@ -1,5 +1,9 @@
 import React from 'react';
-import { BlankTableCell, TableCell } from './style/styled-components';
+import {
+  EntryTableRow,
+  BlankTableCell,
+  TableCell,
+} from './style/styled-components';
 import { HQRInfo } from '../types';
 
 interface Props {
@@ -9,11 +13,12 @@ interface Props {
 
 export default function BlankEntry({ hqrInfo, index }: Props) {
   return (
-    <>
+    <EntryTableRow>
+      <TableCell>{index}</TableCell>
       <BlankTableCell align="center" colSpan={5}>
         Blank entry
       </BlankTableCell>
       <TableCell>{hqrInfo.metadata?.entries[index]?.description}</TableCell>
-    </>
+    </EntryTableRow>
   );
 }

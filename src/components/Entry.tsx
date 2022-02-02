@@ -2,7 +2,6 @@
 import React from 'react';
 import { HQREntryElement } from '@lbalab/hqr';
 import { HQRInfo } from '../types';
-import { EntryTableRow, TableCell } from './style/styled-components';
 import ValidEntry from './ValidEntry';
 import BlankEntry from './BlankEntry';
 import { DataTypes } from '../services/metadata';
@@ -15,19 +14,15 @@ interface Props {
 }
 
 export default function Entry({ entry, index, hqrInfo, dataTypes }: Props) {
+  if (!entry) {
+    return <BlankEntry hqrInfo={hqrInfo} index={index} />;
+  }
   return (
-    <EntryTableRow>
-      <TableCell>{index}</TableCell>
-      {entry ? (
-        <ValidEntry
-          hqrInfo={hqrInfo}
-          entry={entry}
-          index={index}
-          dataTypes={dataTypes}
-        />
-      ) : (
-        <BlankEntry hqrInfo={hqrInfo} index={index} />
-      )}
-    </EntryTableRow>
+    <ValidEntry
+      hqrInfo={hqrInfo}
+      entry={entry}
+      index={index}
+      dataTypes={dataTypes}
+    />
   );
 }
