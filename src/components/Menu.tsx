@@ -4,7 +4,6 @@ import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { HQRInfo } from '../types';
 import { showOpenHQRFileDialog } from '../services/file-dialog';
-import Counters from './Counters';
 
 interface Props {
   hqrInfo: HQRInfo | null;
@@ -35,12 +34,7 @@ export default function Menu({ hqrInfo: hqr, setHQRInfo }: Props) {
           Save
         </Button>
       </Stack>
-      {hqr && (
-        <>
-          <Counters hqr={hqr.hqr} />
-          <Chip label={hqr.filename} onDelete={() => setHQRInfo(null)} />
-        </>
-      )}
+      {hqr && <Chip label={hqr.filename} onDelete={() => setHQRInfo(null)} />}
     </Stack>
   );
 }
