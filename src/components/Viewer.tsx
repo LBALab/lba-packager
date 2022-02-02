@@ -15,6 +15,7 @@ import { Placeholder } from './Placeholder';
 import Entry from './Entry';
 import Menu from './Menu';
 import Counters from './Counters';
+import { DataTypes, getDataTypes } from '../services/metadata';
 
 export default function Viewer() {
   const [hqrInfo, setHQRInfo] = React.useState<HQRInfo | null>(null);
@@ -22,11 +23,15 @@ export default function Viewer() {
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
 
   const [winHeight, setWinHeight] = React.useState(window.innerHeight);
+  const [dataTypes, setDataTypes] = React.useState<DataTypes | null>(null);
+
   const handleResize = () => {
     setWinHeight(window.innerHeight);
   };
+
   React.useEffect(() => {
     window.addEventListener('resize', handleResize, false);
+    getDataTypes().then(setDataTypes).catch(console.error);
   }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -73,6 +78,7 @@ export default function Viewer() {
               page={page}
               rowsPerPage={rowsPerPage}
               height={height - 55}
+              dataTypes={dataTypes}
             />
             <Footer />
           </TableBody>
@@ -107,9 +113,16 @@ interface ContentProps {
   page: number;
   rowsPerPage: number;
   height: number;
+  dataTypes: DataTypes | null;
 }
 
-function TableContent({ hqrInfo, page, rowsPerPage, height }: ContentProps) {
+function TableContent({
+  hqrInfo,
+  page,
+  rowsPerPage,
+  height,
+  dataTypes,
+}: ContentProps) {
   if (!hqrInfo) {
     return <Placeholder height={height} />;
   }
@@ -125,6 +138,7 @@ function TableContent({ hqrInfo, page, rowsPerPage, height }: ContentProps) {
           entry={entry}
           index={offset + idx}
           hqrInfo={hqrInfo}
+          dataTypes={dataTypes}
         />
       ))}
     </>

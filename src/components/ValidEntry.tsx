@@ -6,6 +6,7 @@ import { HQRInfo } from '../types';
 import { compressionRatio, humanFileSize } from '../utils';
 import { TableCell } from './style/styled-components';
 import EntryType from './EntryType';
+import { DataTypes } from '../services/metadata';
 
 const compressionTypes = ['NONE', 'LZSS/1', 'LZSS/2'];
 
@@ -13,9 +14,15 @@ interface Props {
   hqrInfo: HQRInfo;
   entry: HQREntryBase;
   index: number;
+  dataTypes: DataTypes | null;
 }
 
-export default function ValidEntry({ entry, index, hqrInfo }: Props) {
+export default function ValidEntry({
+  entry,
+  index,
+  hqrInfo,
+  dataTypes,
+}: Props) {
   const { metadata } = hqrInfo;
   return (
     <>
@@ -41,7 +48,7 @@ export default function ValidEntry({ entry, index, hqrInfo }: Props) {
       )}
       <TableCell>{compressionTypes[entry.type]}</TableCell>
       <TableCell>
-        <EntryType metadata={metadata?.entries[index]} />
+        <EntryType metadata={metadata?.entries[index]} dataTypes={dataTypes} />
       </TableCell>
       <TableCell>{metadata?.entries[index]?.description}</TableCell>
     </>

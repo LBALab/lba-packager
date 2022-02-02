@@ -2,7 +2,7 @@ import { HQR } from '@lbalab/hqr';
 
 export interface EntryMetadata {
   type: string;
-  game: string;
+  game: 'BOTH' | 'LBA1' | 'LBA2';
   description: string;
 }
 
@@ -35,4 +35,22 @@ export async function getMetadataForHQR(
     }
   }
   return undefined;
+}
+
+interface DataTypesEntry {
+  extension: string;
+  documentation: string[];
+}
+
+export interface DataTypes {
+  BOTH: Record<string, DataTypesEntry>;
+  LBA1: Record<string, DataTypesEntry>;
+  LBA2: Record<string, DataTypesEntry>;
+}
+
+export async function getDataTypes(): Promise<DataTypes> {
+  const dataTypes: DataTypes = await fetch(`${BASE_URL}/data_types.json`).then(
+    res => res.json()
+  );
+  return dataTypes;
 }

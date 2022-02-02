@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip } from '@mui/material';
+import { Tooltip, Link } from '@mui/material';
 import {
   Image as ImageIcon,
   ViewInAr,
@@ -17,11 +17,12 @@ import {
   ViewComfy,
   Textsms,
 } from '@mui/icons-material';
-import { EntryMetadata } from '../services/metadata';
+import { DataTypes, EntryMetadata } from '../services/metadata';
 import { TypeCaption } from './style/styled-components';
 
 interface Props {
   metadata?: EntryMetadata;
+  dataTypes: DataTypes | null;
 }
 
 function TypeIcon({ type }: { type: string }) {
@@ -63,7 +64,7 @@ function TypeIcon({ type }: { type: string }) {
   }
 }
 
-export default function EntryType({ metadata }: Props) {
+export default function EntryType({ metadata, dataTypes }: Props) {
   const type = metadata?.type || 'unknown';
   const caption =
     metadata?.game === 'LBA1' || metadata?.game === 'LBA2'
@@ -72,8 +73,15 @@ export default function EntryType({ metadata }: Props) {
           tooltip: `${metadata?.game} ${type} type`,
         }
       : null;
+  const typeInfo =
+    dataTypes && metadata && metadata.game in dataTypes
+      ? dataTypes[metadata.game][metadata.type]
+      : null;
   return (
-    <div
+    <Link
+      href={typeInfo?.documentation[0]}
+      target="_blank"
+      underline="hover"
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -91,6 +99,6 @@ export default function EntryType({ metadata }: Props) {
           </Tooltip>
         </>
       )}
-    </div>
+    </Link>
   );
 }
