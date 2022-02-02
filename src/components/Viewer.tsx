@@ -19,7 +19,7 @@ import Counters from './Counters';
 export default function Viewer() {
   const [hqrInfo, setHQRInfo] = React.useState<HQRInfo | null>(null);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
 
   const [winHeight, setWinHeight] = React.useState(window.innerHeight);
   const handleResize = () => {
@@ -86,7 +86,7 @@ export default function Viewer() {
       >
         {hqrInfo ? <Counters hqr={hqrInfo.hqr} /> : <div />}
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100, 200]}
+          rowsPerPageOptions={[10, 25, 50, 100, 200]}
           component="div"
           count={hqrInfo ? hqrInfo.hqr.entries.length : 1}
           rowsPerPage={rowsPerPage}
