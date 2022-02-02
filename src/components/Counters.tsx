@@ -23,16 +23,19 @@ export default function Counters({ hqr }: Props) {
         label={`${hqr.entries.length} entries`}
         color="success"
         variant="outlined"
+        size="small"
       />
       <Chip
         label={`${hiddenCount} hidden entries`}
-        color="info"
+        color="secondary"
         variant="outlined"
+        size="small"
       />
       <Chip
         label={`${blankCount} blank entries`}
         color="error"
         variant="outlined"
+        size="small"
       />
     </Stack>
   );

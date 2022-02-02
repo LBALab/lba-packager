@@ -45,7 +45,7 @@ export default function Viewer() {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={3}>
       <Menu hqrInfo={hqrInfo} setHQRInfo={setHQRInfo} />
-      <TableContainer sx={{ height, maxHeight: height, mt: 1 }}>
+      <TableContainer sx={{ height, maxHeight: height }}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <colgroup>
             <col style={{ width: '5%' }} />
@@ -72,6 +72,7 @@ export default function Viewer() {
               hqrInfo={hqrInfo}
               page={page}
               rowsPerPage={rowsPerPage}
+              height={height - 55}
             />
             <Footer />
           </TableBody>
@@ -105,11 +106,12 @@ interface ContentProps {
   hqrInfo: HQRInfo | null;
   page: number;
   rowsPerPage: number;
+  height: number;
 }
 
-function TableContent({ hqrInfo, page, rowsPerPage }: ContentProps) {
+function TableContent({ hqrInfo, page, rowsPerPage, height }: ContentProps) {
   if (!hqrInfo) {
-    return <Placeholder />;
+    return <Placeholder height={height} />;
   }
 
   const { entries } = hqrInfo.hqr;
