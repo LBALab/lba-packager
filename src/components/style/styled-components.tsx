@@ -1,4 +1,5 @@
 import {
+  Typography,
   TableRow as TableRowMUI,
   TableCell as TableCellMUI,
 } from '@mui/material';
@@ -31,4 +32,12 @@ export const TableRow = styled(TableRowMUI)(({ theme }) => ({
 
 export const EntryTableRow = styled(TableRow)(() => ({
   '&:last-child td, &:last-child th': { border: 0 },
+}));
+
+export const TypeCaption = styled(Typography)(() => ({
+  background: 'rgba(0, 0, 0, 0.15)',
+  borderRadius: 3,
+  padding: '1px 4px',
+  color: 'grey',
+  cursor: 'default',
 }));

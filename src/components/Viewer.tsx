@@ -40,8 +40,8 @@ export default function Viewer() {
             <col style={{ width: '10%' }} />
             <col style={{ width: '10%' }} />
             <col style={{ width: '10%' }} />
-            <col style={{ width: '10%' }} />
-            <col style={{ width: '50%' }} />
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '40%' }} />
           </colgroup>
           <TableHead>
             <TableRow>
@@ -49,7 +49,7 @@ export default function Viewer() {
               <TableCell align="right">Offset</TableCell>
               <TableCell align="right">Size</TableCell>
               <TableCell align="right">Compressed</TableCell>
-              <TableCell>Compression Type</TableCell>
+              <TableCell>Compression</TableCell>
               <TableCell>Type</TableCell>
               <TableCell>Description</TableCell>
             </TableRow>
