@@ -93,6 +93,8 @@ export default function Viewer() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          showFirstButton
+          showLastButton
         />
       </Stack>
     </Paper>
