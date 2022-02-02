@@ -10,10 +10,9 @@ interface Props {
 export default function BlankEntry({ hqrInfo, index }: Props) {
   return (
     <>
-      <BlankTableCell align="center" colSpan={4}>
+      <BlankTableCell align="center" colSpan={5}>
         Blank entry
       </BlankTableCell>
-      <TableCell />
       <TableCell>{hqrInfo.metadata?.entries[index]?.description}</TableCell>
     </>
   );
