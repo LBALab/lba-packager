@@ -17,6 +17,9 @@ export async function getMetadataForHQR(
   filename: string,
   hqr: HQR
 ): Promise<Metadata | undefined> {
+  if (filename.endsWith('.VOX')) {
+    filename = `VOX/XX${filename.substring(2)}`;
+  }
   const [lba1, lba2] = await Promise.all([
     fetch(`${BASE_URL}/LBA1/HQR/${filename}.json`),
     fetch(`${BASE_URL}/LBA2/HQR/${filename}.json`),
