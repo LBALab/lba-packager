@@ -53,6 +53,7 @@ function TypeIcon({ type }: { type: string }) {
     case 'iso_scenery_fragment':
     case 'island_heightmap':
       return <Landscape fontSize="small" color="primary" />;
+    case 'wave_audio':
     case 'creative_labs_audio':
       return <MusicNote fontSize="small" color="primary" />;
     case 'scene':
