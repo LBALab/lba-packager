@@ -14,7 +14,8 @@ interface Props {
 export default function BlankEntry({ hqrInfo, index }: Props) {
   return (
     <EntryTableRow>
-      <TableCell>{index}</TableCell>
+      <TableCell />
+      <TableCell align="right">{index}</TableCell>
       <BlankTableCell align="center" colSpan={5}>
         Blank entry
       </BlankTableCell>

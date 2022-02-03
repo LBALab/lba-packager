@@ -53,6 +53,7 @@ export default function Viewer() {
       <TableContainer sx={{ height, maxHeight: height }}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <colgroup>
+            <col style={{ width: '0%' }} />
             <col style={{ width: '5%' }} />
             <col style={{ width: '5%' }} />
             <col style={{ width: '10%' }} />
@@ -63,7 +64,8 @@ export default function Viewer() {
           </colgroup>
           <TableHead>
             <TableRow>
-              <TableCell>Entry</TableCell>
+              <TableCell />
+              <TableCell>#</TableCell>
               <TableCell align="right">Offset</TableCell>
               <TableCell align="right">Size</TableCell>
               <TableCell align="right">Compressed</TableCell>
@@ -93,7 +95,7 @@ export default function Viewer() {
       >
         {hqrInfo ? <Counters hqr={hqrInfo.hqr} /> : <div />}
         <TablePagination
-          rowsPerPageOptions={[10, 25, 50, 100, 200]}
+          rowsPerPageOptions={[10, 15, 20, 50, 100, 200]}
           component="div"
           count={hqrInfo ? hqrInfo.hqr.entries.length : 1}
           rowsPerPage={rowsPerPage}

@@ -10,12 +10,20 @@ export const TableCell = styled(TableCellMUI)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    '&:nth-of-type(2)': {
+      paddingLeft: 0,
+    },
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     borderRight: `1px solid ${theme.palette.divider}`,
     '&:first-of-type': {
       borderLeft: `1px solid ${theme.palette.divider}`,
+      borderRight: 'none',
+      padding: 0,
+    },
+    '&:nth-of-type(2)': {
+      paddingLeft: 0,
     },
   },
 }));
