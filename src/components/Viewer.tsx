@@ -54,18 +54,18 @@ export default function Viewer() {
         <Table size="small" aria-label="sticky table" stickyHeader>
           <colgroup>
             <col style={{ width: '0%' }} />
-            <col style={{ width: '5%' }} />
-            <col style={{ width: '5%' }} />
+            <col style={{ width: '0%' }} />
+            <col style={{ width: '0%' }} />
             <col style={{ width: '10%' }} />
             <col style={{ width: '10%' }} />
             <col style={{ width: '10%' }} />
             <col style={{ width: '20%' }} />
-            <col style={{ width: '40%' }} />
+            <col style={{ width: '50%' }} />
           </colgroup>
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>#</TableCell>
+              <TableCell align="right">#</TableCell>
               <TableCell align="right">Offset</TableCell>
               <TableCell align="right">Size</TableCell>
               <TableCell align="right">Compressed</TableCell>
