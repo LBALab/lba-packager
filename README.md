@@ -4,7 +4,7 @@ A web based [HQR files editor][lba-packager-site]:
 
 ![Screenshot](screenshot.png)
 
-HQR is a file format used by the Little Big Adventure 1 & 2 games for storing game assets.
+HQR ([High Quality Resource][hqr-info-url]) is a file format used by the Little Big Adventure 1 & 2 games for storing game assets.
 
 This project is intended to be an easy to use, multi-platform modern alternative to exisiting tools such as [LBADeCOMP][lba-decomp] or [LBA Pack Editor][lba-pack-editor].
 
@@ -35,6 +35,7 @@ npm start
 Browse to http://localhost:3000/
 
 [lba-packager-site]: https://lbalab.github.io/lba-packager/
+[hqr-info-url]: http://lbafileinfo.kaziq.net/index.php/High_quality_resource
 [hqr-lib-npm]: https://www.npmjs.com/package/@lbalab/hqr
 [hqr-lib-repo]: https://github.com/LBALab/hqr
 [lba-decomp]: https://www.magicball.net/downloads/programs/development/lbadecomp_1_2
