@@ -8,7 +8,10 @@ import {
   TableBody,
   TableContainer,
   TablePagination,
+  Tooltip,
+  Link,
 } from '@mui/material';
+import { Help } from '@mui/icons-material';
 import { HQRInfo } from '../types';
 import { TableCell, TableRow } from './style/styled-components';
 import { Placeholder } from './Placeholder';
@@ -70,8 +73,44 @@ export default function Viewer() {
               <TableCell align="right">Size</TableCell>
               <TableCell align="right">Compressed</TableCell>
               <TableCell>Compression</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Description</TableCell>
+              <TableCell>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  Type&nbsp;
+                  <Tooltip title="Entries type information come from: https://github.com/LBALab/metadata">
+                    <Link
+                      href="https://github.com/LBALab/metadata"
+                      target="_blank"
+                    >
+                      <Help sx={{ fontSize: 14, color: 'info.main' }} />
+                    </Link>
+                  </Tooltip>
+                </div>
+              </TableCell>
+              <TableCell>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  Description&nbsp;
+                  <Tooltip title="Entries descriptions come from: https://github.com/LBALab/metadata">
+                    <Link
+                      href="https://github.com/LBALab/metadata"
+                      target="_blank"
+                    >
+                      <Help sx={{ fontSize: 14, color: 'info.main' }} />
+                    </Link>
+                  </Tooltip>
+                </div>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
