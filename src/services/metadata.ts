@@ -60,8 +60,8 @@ export interface DataTypes {
 }
 
 export async function getDataTypes(): Promise<DataTypes> {
-  const dataTypes: DataTypes = await fetch(`${BASE_URL}/data_types.json`).then(
-    res => res.json()
-  );
+  const dataTypes: DataTypes = await fetch(
+    `${BASE_URL}/common/data_types.json`
+  ).then(res => res.json());
   return dataTypes;
 }
