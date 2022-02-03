@@ -16,6 +16,9 @@ import {
   CropOriginal,
   ViewComfy,
   Textsms,
+  ChangeHistory,
+  Texture,
+  LightMode,
 } from '@mui/icons-material';
 import { DataTypes, EntryMetadata } from '../services/metadata';
 import { TypeCaption } from './style/styled-components';
@@ -48,6 +51,7 @@ function TypeIcon({ type }: { type: string }) {
       return <Apartment fontSize="small" color="primary" />;
     case 'iso_scenery':
     case 'iso_scenery_fragment':
+    case 'island_heightmap':
       return <Landscape fontSize="small" color="primary" />;
     case 'creative_labs_audio':
       return <MusicNote fontSize="small" color="primary" />;
@@ -55,9 +59,16 @@ function TypeIcon({ type }: { type: string }) {
       return <CropOriginal fontSize="small" color="primary" />;
     case 'dialogs':
       return <Textsms fontSize="small" color="primary" />;
+    case 'island_polygons':
+      return <ChangeHistory fontSize="small" color="primary" />;
+    case 'island_texture_uvs':
+      return <Texture fontSize="small" color="primary" />;
+    case 'island_intensities':
+      return <LightMode fontSize="small" color="primary" />;
     case 'sprite_actors':
     case 'entities_info':
     case 'dialogs_index':
+    case 'island_objects':
       return <DataArray fontSize="small" color="primary" />;
     default:
       return <DataObject fontSize="small" color="primary" />;
