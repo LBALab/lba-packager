@@ -22,16 +22,24 @@ export async function getMetadataForHQR(
     fetch(`${BASE_URL}/LBA2/HQR/${filename}.json`),
   ]);
   if (lba1.status < 400) {
-    const lba1Metadata = (await lba1.json()) as Metadata;
-    if (lba1Metadata.entries.length === hqr.entries.length) {
-      return lba1Metadata;
+    try {
+      const lba1Metadata = (await lba1.json()) as Metadata;
+      if (lba1Metadata.entries.length === hqr.entries.length) {
+        return lba1Metadata;
+      }
+    } catch (e) {
+      // ignore
     }
   }
 
   if (lba2.status < 400) {
-    const lba2Metadata = (await lba2.json()) as Metadata;
-    if (lba2Metadata.entries.length === hqr.entries.length) {
-      return lba2Metadata;
+    try {
+      const lba2Metadata = (await lba2.json()) as Metadata;
+      if (lba2Metadata.entries.length === hqr.entries.length) {
+        return lba2Metadata;
+      }
+    } catch (e) {
+      // ignore
     }
   }
   return undefined;
