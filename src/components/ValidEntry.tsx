@@ -5,6 +5,7 @@ import {
   KeyboardArrowRight,
   KeyboardArrowDown,
   HideSource,
+  Download,
 } from '@mui/icons-material';
 import { CompressionType, HQREntryBase } from '@lbalab/hqr';
 import { HQRInfo } from '../types';
@@ -12,6 +13,7 @@ import { compressionRatio, humanFileSize } from '../utils';
 import { EntryTableRow, TableCell } from './style/styled-components';
 import EntryType from './EntryType';
 import { DataTypes } from '../services/metadata';
+import { saveEntry } from '../services/save-entry';
 
 const compressionTypes = ['NONE', 'LZSS/1', 'LZSS/2'];
 
@@ -34,6 +36,15 @@ export default function ValidEntry({
   const { metadata } = hqrInfo;
   const hiddenEntries: HQREntryBase[] = entry.hiddenEntries;
   const hasHiddenEntries = !hidden && hiddenEntries.length > 0;
+  const save = React.useCallback(() => {
+    saveEntry(
+      hqrInfo.filename,
+      entry,
+      index,
+      metadata?.entries[index],
+      dataTypes
+    );
+  }, [hqrInfo, entry, index, metadata, dataTypes]);
   return (
     <>
       <EntryTableRow
@@ -98,6 +109,16 @@ export default function ValidEntry({
         </TableCell>
         <TableCell>
           {!hidden && metadata?.entries[index]?.description}
+        </TableCell>
+        <TableCell>
+          <IconButton
+            onClick={save}
+            aria-label="download"
+            size="small"
+            sx={{ p: 0 }}
+          >
+            <Download />
+          </IconButton>
         </TableCell>
       </EntryTableRow>
       {open &&

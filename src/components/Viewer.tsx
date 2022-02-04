@@ -64,6 +64,7 @@ export default function Viewer() {
             <col style={{ width: '10%' }} />
             <col style={{ width: '20%' }} />
             <col style={{ width: '50%' }} />
+            <col style={{ width: '0%' }} />
           </colgroup>
           <TableHead>
             <TableRow>
@@ -111,6 +112,7 @@ export default function Viewer() {
                   </Tooltip>
                 </div>
               </TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>

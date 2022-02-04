@@ -20,6 +20,7 @@ export default function BlankEntry({ hqrInfo, index }: Props) {
         Blank entry
       </BlankTableCell>
       <TableCell>{hqrInfo.metadata?.entries[index]?.description}</TableCell>
+      <TableCell />
     </EntryTableRow>
   );
 }
