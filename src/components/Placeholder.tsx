@@ -6,7 +6,7 @@ export function Placeholder({ height }: { height: number }) {
   return (
     <>
       <TableRow>
-        <TableCell colSpan={8} sx={{ height: `${height}px` }}>
+        <TableCell colSpan={9} sx={{ height: `${height}px` }}>
           <Typography variant="h3" align="center">
             <img src="logo200.png" />
           </Typography>
