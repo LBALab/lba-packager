@@ -28,7 +28,7 @@ export async function showOpenHQRFileDialog(): Promise<HQRInfo | null> {
 }
 
 export function saveHQR(hqrInfo: HQRInfo) {
-  const buffer = hqrInfo.hqr.toArrayBuffer();
+  const buffer = hqrInfo.hqr.toArrayBuffer({ fastRecompile: true });
   const blob = new Blob([buffer], { type: 'application/octet-stream' });
   saveAs(blob, hqrInfo.filename);
 }
