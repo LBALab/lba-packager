@@ -59,12 +59,17 @@ function getEntryBlob(
   let extension = 'dat';
   if (metadata && dataTypes) {
     extension = dataTypes[metadata.game][metadata.type].extension;
+    // Patch .wav and .voc entries so they can be played on modern media players.
     if (extension === 'wav') {
-      // Patch .wav entries so they can be played on modern media players.
       content = new ArrayBuffer(entry.content.byteLength);
       const view = new Uint8Array(content);
       view.set(new Uint8Array(entry.content));
       view[0] = 0x52;
+    } else if (extension === 'voc') {
+      content = new ArrayBuffer(entry.content.byteLength);
+      const view = new Uint8Array(content);
+      view.set(new Uint8Array(entry.content));
+      view[0] = 0x43;
     }
   }
   const name = `${hqrFilename}_${index}`;
