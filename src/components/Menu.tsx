@@ -1,20 +1,34 @@
 import React, { useCallback } from 'react';
 import { Button, Chip, Stack } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { HQRInfo } from '../types';
-import { showOpenHQRFileDialog } from '../services/file-dialog';
+import { saveHQR, showOpenHQRFileDialog } from '../services/hqr-files';
+import { ViewerContext } from './Viewer';
 
 interface Props {
-  hqrInfo: HQRInfo | null;
   setHQRInfo: (hqr: HQRInfo | null) => void;
+  modified: boolean;
 }
 
-export default function Menu({ hqrInfo, setHQRInfo }: Props) {
+export default function Menu({ setHQRInfo, modified }: Props) {
+  const { hqrInfo } = React.useContext(ViewerContext);
+  const [saving, setSaving] = React.useState(false);
+
   const openDialog = useCallback(() => {
     void showOpenHQRFileDialog().then(setHQRInfo);
   }, [setHQRInfo]);
+
+  const save = useCallback(() => {
+    if (hqrInfo) {
+      setSaving(true);
+      saveHQR(hqrInfo);
+      setHQRInfo(hqrInfo); // This is to reset the replacedEntries state
+      setSaving(false);
+    }
+  }, [hqrInfo]);
 
   return (
     <Stack
@@ -32,9 +46,16 @@ export default function Menu({ hqrInfo, setHQRInfo }: Props) {
         >
           Open
         </Button>
-        <Button variant="contained" startIcon={<SaveAltIcon />} disabled>
+        <LoadingButton
+          onClick={() => save()}
+          variant="contained"
+          loading={saving}
+          loadingPosition="start"
+          startIcon={<SaveAltIcon />}
+          disabled={!modified}
+        >
           Save
-        </Button>
+        </LoadingButton>
       </Stack>
       {hqrInfo?.metadata?.description && (
         <Chip

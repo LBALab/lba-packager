@@ -1,41 +1,53 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react';
-import { Tooltip, IconButton } from '@mui/material';
+import { Tooltip, IconButton, Stack, Badge, Chip } from '@mui/material';
 import {
   KeyboardArrowRight,
   KeyboardArrowDown,
   HideSource,
   Download,
+  UploadFile,
 } from '@mui/icons-material';
 import { CompressionType, HQREntryBase } from '@lbalab/hqr';
 import { HQRInfo } from '../types';
 import { compressionRatio, humanFileSize } from '../utils';
 import { EntryTableRow, TableCell } from './style/styled-components';
 import EntryType from './EntryType';
-import { DataTypes } from '../services/metadata';
-import { saveEntry } from '../services/save-entry';
+import { replaceEntry, saveEntry } from '../services/entry-actions';
+import { ViewerContext } from './Viewer';
 
 const compressionTypes = ['NONE', 'LZSS/1', 'LZSS/2'];
 
 interface Props {
-  hqrInfo: HQRInfo;
   entry: HQREntryBase;
   index: number;
-  dataTypes: DataTypes | null;
-  hidden?: boolean;
+  parent?: HQREntryBase;
+  parentIndex?: number;
 }
 
 export default function ValidEntry({
-  entry,
   index,
-  hqrInfo,
-  dataTypes,
-  hidden = false,
+  entry,
+  parent,
+  parentIndex,
 }: Props) {
+  const {
+    hqrInfo: hqrInfoMaybe,
+    dataTypes,
+    markModified,
+  } = React.useContext(ViewerContext);
   const [open, setOpen] = React.useState(false);
+  const [replacement, setReplacement] = React.useState<string | undefined>(
+    entry.metadata.replacement as string
+  );
+
+  const hqrInfo = hqrInfoMaybe as HQRInfo;
+
   const { metadata } = hqrInfo;
   const hiddenEntries: HQREntryBase[] = entry.hiddenEntries;
-  const hasHiddenEntries = !hidden && hiddenEntries.length > 0;
+  const hasHiddenEntries = !parent && hiddenEntries.length > 0;
+  const replaced = !!replacement;
+
   const save = React.useCallback(() => {
     saveEntry(
       hqrInfo.filename,
@@ -45,11 +57,24 @@ export default function ValidEntry({
       dataTypes
     );
   }, [hqrInfo, entry, index, metadata, dataTypes]);
+
+  const replace = React.useCallback(() => {
+    const success = (newReplacement: string) => {
+      markModified();
+      setReplacement(newReplacement);
+    };
+    if (parentIndex !== undefined) {
+      void replaceEntry(hqrInfo.hqr, parentIndex, index).then(success);
+    } else {
+      void replaceEntry(hqrInfo.hqr, index).then(success);
+    }
+  }, [hqrInfo, markModified]);
+
   return (
     <>
       <EntryTableRow
         sx={
-          hidden
+          parent
             ? {
                 bgcolor: '#f3e5f5',
                 '&:nth-of-type(odd)': {
@@ -72,11 +97,14 @@ export default function ValidEntry({
           )}
         </TableCell>
         <TableCell align="right">
-          {hidden ? (
-            <HideSource sx={{ fontSize: 14 }} color="secondary" />
-          ) : (
-            index
-          )}
+          <Badge variant="dot" color="warning" invisible={!replaced}>
+            {parent ? (
+              <HideSource sx={{ fontSize: 14 }} color="secondary" />
+            ) : (
+              <b>{index}</b>
+            )}
+            &nbsp;
+          </Badge>
         </TableCell>
         <TableCell align="right">{entry.metadata.offset}</TableCell>
         {entry.type === CompressionType.NONE ? (
@@ -100,36 +128,54 @@ export default function ValidEntry({
         )}
         <TableCell>{compressionTypes[entry.type]}</TableCell>
         <TableCell>
-          {!hidden && (
-            <EntryType
-              metadata={metadata?.entries[index]}
-              dataTypes={dataTypes}
-            />
-          )}
+          {!parent && <EntryType metadata={metadata?.entries[index]} />}
         </TableCell>
         <TableCell>
-          {!hidden && metadata?.entries[index]?.description}
-        </TableCell>
-        <TableCell>
-          <IconButton
-            onClick={save}
-            aria-label="download"
-            size="small"
+          <Stack
+            direction="row"
+            spacing={1}
+            justifyContent="space-between"
             sx={{ p: 0 }}
           >
-            <Download />
-          </IconButton>
+            {(!parent && metadata?.entries[index]?.description) || <>&nbsp;</>}
+            {replacement && (
+              <Chip label={replacement} color="warning" size="small" />
+            )}
+          </Stack>
+        </TableCell>
+        <TableCell>
+          <Stack direction="row" spacing={0.5} alignItems="center">
+            <Tooltip title="Download entry">
+              <IconButton
+                onClick={save}
+                aria-label="download"
+                size="small"
+                sx={{ p: 0 }}
+              >
+                <Download />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Replace entry">
+              <IconButton
+                onClick={replace}
+                aria-label="replace entry"
+                size="small"
+                sx={{ p: 0 }}
+              >
+                <UploadFile />
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </TableCell>
       </EntryTableRow>
       {open &&
         hiddenEntries.map((hEntry, idx) => (
           <ValidEntry
             key={idx}
-            hqrInfo={hqrInfo}
             entry={hEntry}
             index={idx}
-            dataTypes={dataTypes}
-            hidden={true}
+            parent={entry}
+            parentIndex={index}
           />
         ))}
     </>

@@ -20,12 +20,12 @@ import {
   Texture,
   LightMode,
 } from '@mui/icons-material';
-import { DataTypes, EntryMetadata } from '../services/metadata';
+import { EntryMetadata } from '../services/metadata';
 import { TypeCaption } from './style/styled-components';
+import { ViewerContext } from './Viewer';
 
 interface Props {
   metadata?: EntryMetadata;
-  dataTypes: DataTypes | null;
 }
 
 function TypeIcon({ type }: { type: string }) {
@@ -76,7 +76,8 @@ function TypeIcon({ type }: { type: string }) {
   }
 }
 
-export default function EntryType({ metadata, dataTypes }: Props) {
+export default function EntryType({ metadata }: Props) {
+  const { dataTypes } = React.useContext(ViewerContext);
   const type = metadata?.type || 'unknown';
   const caption =
     metadata?.game === 'LBA1' || metadata?.game === 'LBA2'

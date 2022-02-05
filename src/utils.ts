@@ -1,6 +1,9 @@
 import { HQREntry } from '@lbalab/hqr';
 
 export function humanFileSize(bytes: number, dp = 1): string {
+  if (bytes === -1) {
+    return 'N/A';
+  }
   const thresh = 1000;
 
   if (Math.abs(bytes) < thresh) {

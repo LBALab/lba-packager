@@ -1,4 +1,5 @@
 import { HQR } from '@lbalab/hqr';
+import saveAs from 'file-saver';
 import { HQRInfo } from '../types';
 import { getMetadataForHQR } from './metadata';
 
@@ -24,4 +25,10 @@ export async function showOpenHQRFileDialog(): Promise<HQRInfo | null> {
     return { hqr, filename, metadata };
   }
   return null;
+}
+
+export function saveHQR(hqrInfo: HQRInfo) {
+  const buffer = hqrInfo.hqr.toArrayBuffer();
+  const blob = new Blob([buffer], { type: 'application/octet-stream' });
+  saveAs(blob, hqrInfo.filename);
 }
