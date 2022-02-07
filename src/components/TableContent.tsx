@@ -16,13 +16,19 @@ export default function TableContent({ page, rowsPerPage, height }: Props) {
     return <Placeholder height={height} />;
   }
 
+  const { filename } = hqrInfo;
   const { entries } = hqrInfo.hqr;
+  const count = entries.length;
   const offset = page * rowsPerPage;
   const entriesSliced = entries.slice(offset, offset + rowsPerPage);
   return (
     <>
       {entriesSliced.map((entry, idx) => (
-        <Entry key={offset + idx} entry={entry} index={offset + idx} />
+        <Entry
+          key={`${filename}${count}_${offset + idx}`}
+          entry={entry}
+          index={offset + idx}
+        />
       ))}
     </>
   );
