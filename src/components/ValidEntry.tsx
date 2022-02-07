@@ -49,13 +49,24 @@ export default function ValidEntry({
   const replaced = !!replacement;
 
   const save = React.useCallback(() => {
-    saveEntry(
-      hqrInfo.filename,
-      entry,
-      index,
-      metadata?.entries[index],
-      dataTypes
-    );
+    if (parentIndex !== undefined) {
+      saveEntry(
+        hqrInfo.filename,
+        entry,
+        parentIndex,
+        metadata?.entries[index],
+        dataTypes,
+        index
+      );
+    } else {
+      saveEntry(
+        hqrInfo.filename,
+        entry,
+        index,
+        metadata?.entries[index],
+        dataTypes
+      );
+    }
   }, [hqrInfo, entry, index, metadata, dataTypes]);
 
   const replace = React.useCallback(() => {

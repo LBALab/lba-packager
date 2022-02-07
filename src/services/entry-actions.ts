@@ -9,15 +9,15 @@ export function saveEntry(
   entry: HQREntryBase,
   index: number,
   metadata: EntryMetadata | undefined,
-  dataTypes: DataTypes | null
+  dataTypes: DataTypes | null,
+  subIndex = -1
 ) {
-  const [filename, blob] = getEntryBlob(
-    hqrFilename,
-    entry,
-    index,
-    metadata,
-    dataTypes
-  );
+  const filenameWithoutExt = hqrFilename.replace(/\.[^/.]+$/, '');
+  const [extension, blob] = getEntryBlob(entry, metadata, dataTypes);
+  const filename =
+    subIndex !== -1
+      ? `${filenameWithoutExt}_${index}_${subIndex}.${extension}`
+      : `${filenameWithoutExt}_${index}.${extension}`;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   saveAs(blob, filename);
 }
@@ -27,16 +27,16 @@ export async function saveAllEntriesAsZip(
   dataTypes: DataTypes | null
 ) {
   const zip = new JSZip();
+  const filenameWithoutExt = hqrInfo.filename.replace(/\.[^/.]+$/, '');
   for (let i = 0; i < hqrInfo.hqr.entries.length; i++) {
     const entry = hqrInfo.hqr.entries[i];
     if (entry) {
-      const [filename, blob] = getEntryBlob(
-        hqrInfo.filename,
+      const [extension, blob] = getEntryBlob(
         entry,
-        i,
         hqrInfo.metadata?.entries[i],
         dataTypes
       );
+      const filename = `${filenameWithoutExt}_${i}.${extension}`;
       zip.file(filename, blob);
     }
   }
@@ -45,13 +45,11 @@ export async function saveAllEntriesAsZip(
     type: 'arraybuffer',
   });
   const blob = new Blob([zippedData], { type: 'application/zip' });
-  saveAs(blob, `${hqrInfo.filename}.zip`);
+  saveAs(blob, `${filenameWithoutExt}.zip`);
 }
 
 function getEntryBlob(
-  hqrFilename: string,
   entry: HQREntryBase,
-  index: number,
   metadata: EntryMetadata | undefined,
   dataTypes: DataTypes | null
 ): [string, Blob] {
@@ -67,11 +65,7 @@ function getEntryBlob(
       view[0] = extension === 'wav' ? 0x52 : 0x43;
     }
   }
-  const name = `${hqrFilename}_${index}`;
-  return [
-    `${name}.${extension}`,
-    new Blob([content], { type: 'application/octet-stream' }),
-  ];
+  return [extension, new Blob([content], { type: 'application/octet-stream' })];
 }
 
 export async function replaceEntry(hqr: HQR, index: number, subIndex?: number) {
