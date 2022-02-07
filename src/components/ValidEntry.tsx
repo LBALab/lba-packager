@@ -6,7 +6,7 @@ import {
   KeyboardArrowDown,
   HideSource,
   Download,
-  UploadFile,
+  Edit,
   ContentCopy,
 } from '@mui/icons-material';
 import { CompressionType, HQREntryBase } from '@lbalab/hqr';
@@ -195,7 +195,7 @@ export default function ValidEntry({
                 size="small"
                 sx={{ p: 0 }}
               >
-                <UploadFile />
+                <Edit />
               </IconButton>
             </Tooltip>
           </Stack>
