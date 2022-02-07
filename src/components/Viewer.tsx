@@ -61,6 +61,7 @@ export default function Viewer() {
     ReactDOM.unstable_batchedUpdates(() => {
       setHQRInfo(hqrInfo);
       setModified(false);
+      setPage(0);
     });
   }, []);
 
