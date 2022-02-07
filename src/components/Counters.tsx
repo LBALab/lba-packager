@@ -13,6 +13,9 @@ export default function Counters({ hqr }: Props) {
     const hEntries: HQREntryBase[] = e.hiddenEntries;
     return acc + hEntries.length;
   }, 0);
+  const duplicateCount = hqr.entries.filter(
+    e => e && e.metadata.virtual
+  ).length;
   return (
     <Stack direction="row" spacing={1} alignItems="center">
       <Chip
@@ -30,6 +33,12 @@ export default function Counters({ hqr }: Props) {
       <Chip
         label={`${blankCount} blank entries`}
         color="error"
+        variant="outlined"
+        size="small"
+      />
+      <Chip
+        label={`${duplicateCount} duplicate entries`}
+        color="warning"
         variant="outlined"
         size="small"
       />

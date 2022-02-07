@@ -7,6 +7,7 @@ import {
   HideSource,
   Download,
   UploadFile,
+  ContentCopy,
 } from '@mui/icons-material';
 import { CompressionType, HQREntryBase } from '@lbalab/hqr';
 import { HQRInfo } from '../types';
@@ -148,7 +149,28 @@ export default function ValidEntry({
             justifyContent="space-between"
             sx={{ p: 0 }}
           >
-            {(!parent && metadata?.entries[index]?.description) || <>&nbsp;</>}
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ p: 0 }}
+            >
+              {entry.metadata.virtual && (
+                <>
+                  <Tooltip
+                    title={`Duplicate of entry #${
+                      entry.metadata.target || '?'
+                    }`}
+                  >
+                    <ContentCopy color="warning" fontSize="small" />
+                  </Tooltip>
+                  &nbsp;
+                </>
+              )}
+              {(!parent && metadata?.entries[index]?.description) || (
+                <>&nbsp;</>
+              )}
+            </Stack>
             {replacement && (
               <Chip label={replacement} color="warning" size="small" />
             )}
