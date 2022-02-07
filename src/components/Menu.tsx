@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
 import { Button, Chip, Stack } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
-import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import {
+  OpenInBrowser,
+  SaveAlt,
+  Save,
+  SaveAs,
+  GitHub,
+} from '@mui/icons-material';
 import { HQRInfo } from '../types';
 import { saveHQR, showOpenHQRFileDialog } from '../services/hqr-files';
 import { ViewerContext } from './Viewer';
@@ -15,20 +18,20 @@ interface Props {
 
 export default function Menu({ setHQRInfo, modified }: Props) {
   const { hqrInfo } = React.useContext(ViewerContext);
-  const [saving, setSaving] = React.useState(false);
 
   const openDialog = useCallback(() => {
     void showOpenHQRFileDialog().then(setHQRInfo);
   }, [setHQRInfo]);
 
-  const save = useCallback(() => {
-    if (hqrInfo) {
-      setSaving(true);
-      saveHQR(hqrInfo);
-      setHQRInfo(hqrInfo); // This is to reset the replacedEntries state
-      setSaving(false);
-    }
-  }, [hqrInfo]);
+  const save = useCallback(
+    (showPicker: boolean) => {
+      if (hqrInfo) {
+        saveHQR(hqrInfo, showPicker);
+        setHQRInfo(hqrInfo); // This is to reset the replacedEntries state
+      }
+    },
+    [hqrInfo]
+  );
 
   return (
     <Stack
@@ -42,20 +45,40 @@ export default function Menu({ setHQRInfo, modified }: Props) {
         <Button
           onClick={openDialog}
           variant="contained"
-          startIcon={<OpenInBrowserIcon />}
+          startIcon={<OpenInBrowser />}
         >
           Open
         </Button>
-        <LoadingButton
-          onClick={() => save()}
-          variant="contained"
-          loading={saving}
-          loadingPosition="start"
-          startIcon={<SaveAltIcon />}
-          disabled={!modified}
-        >
-          Save
-        </LoadingButton>
+        {hqrInfo && !hqrInfo.fileHandle && (
+          <Button
+            onClick={() => save(false)}
+            variant="contained"
+            startIcon={<SaveAlt />}
+            disabled={!modified}
+          >
+            Download
+          </Button>
+        )}
+        {hqrInfo && hqrInfo.fileHandle && (
+          <>
+            <Button
+              onClick={() => save(false)}
+              variant="contained"
+              startIcon={<Save />}
+              disabled={!modified}
+            >
+              Save
+            </Button>
+            <Button
+              onClick={() => save(true)}
+              variant="contained"
+              startIcon={<SaveAs />}
+              disabled={!modified}
+            >
+              Save as
+            </Button>
+          </>
+        )}
       </Stack>
       {hqrInfo?.metadata?.description && (
         <Chip
@@ -70,7 +93,7 @@ export default function Menu({ setHQRInfo, modified }: Props) {
       {!hqrInfo && (
         <Chip
           label="Contribute to this project"
-          icon={<GitHubIcon />}
+          icon={<GitHub />}
           component="a"
           href="https://github.com/LBALab/lba-packager"
           target="_blank"

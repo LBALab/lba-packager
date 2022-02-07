@@ -5,4 +5,5 @@ export interface HQRInfo {
   hqr: HQR;
   filename: string;
   metadata?: Metadata;
+  fileHandle?: FileSystemFileHandle;
 }
