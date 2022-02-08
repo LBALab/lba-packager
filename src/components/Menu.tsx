@@ -26,7 +26,7 @@ export default function Menu({ setHQRInfo, modified }: Props) {
   const save = useCallback(
     (showPicker: boolean) => {
       if (hqrInfo) {
-        saveHQR(hqrInfo, showPicker);
+        void saveHQR(hqrInfo, showPicker);
         setHQRInfo(hqrInfo); // This is to reset the replacedEntries state
       }
     },
