@@ -38,6 +38,18 @@ export async function saveAllEntriesAsZip(
       );
       const filename = `${filenameWithoutExt}_${i}.${extension}`;
       zip.file(filename, blob);
+      if (entry.hiddenEntries?.length > 0) {
+        for (let j = 0; j < entry.hiddenEntries.length; j++) {
+          const hiddenEntry = entry.hiddenEntries[j];
+          const [hiddenExtension, hiddenBlob] = getEntryBlob(
+            hiddenEntry,
+            hqrInfo.metadata?.entries[i],
+            dataTypes
+          );
+          const hiddenFilename = `${filenameWithoutExt}_${i}_${j}.${hiddenExtension}`;
+          zip.file(hiddenFilename, hiddenBlob);
+        }
+      }
     }
   }
   const zippedData = await zip.generateAsync<'arraybuffer'>({
