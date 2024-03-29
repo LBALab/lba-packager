@@ -27,9 +27,7 @@ export async function getMetadataForHQR(
   if (lba1.status < 400) {
     try {
       const lba1Metadata = (await lba1.json()) as Metadata;
-      if (lba1Metadata.entries.length === hqr.entries.length) {
-        return lba1Metadata;
-      }
+      return lba1Metadata;
     } catch (e) {
       // ignore
     }
@@ -38,9 +36,7 @@ export async function getMetadataForHQR(
   if (lba2.status < 400) {
     try {
       const lba2Metadata = (await lba2.json()) as Metadata;
-      if (lba2Metadata.entries.length === hqr.entries.length) {
-        return lba2Metadata;
-      }
+      return lba2Metadata;
     } catch (e) {
       // ignore
     }
