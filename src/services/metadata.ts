@@ -14,8 +14,7 @@ export interface Metadata {
 const BASE_URL = 'https://raw.githubusercontent.com/LBALab/metadata/main/';
 
 export async function getMetadataForHQR(
-  filename: string,
-  hqr: HQR
+  filename: string
 ): Promise<Metadata | undefined> {
   if (filename.endsWith('.VOX')) {
     filename = `VOX/XX${filename.substring(2)}`;

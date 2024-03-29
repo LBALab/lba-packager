@@ -42,7 +42,7 @@ export async function showOpenHQRFileDialog(): Promise<HQRInfo | null> {
   const filename = file.name;
   if (buffer) {
     const hqr = HQR.fromArrayBuffer(buffer);
-    const metadata = await getMetadataForHQR(filename, hqr);
+    const metadata = await getMetadataForHQR(filename);
     return { hqr, filename, metadata, fileHandle };
   }
   return null;
