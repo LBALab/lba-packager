@@ -1,4 +1,3 @@
-
 export interface EntryMetadata {
   type: string;
   game: 'BOTH' | 'LBA1' | 'LBA2';
