@@ -1,4 +1,3 @@
-import { HQR } from '@lbalab/hqr';
 
 export interface EntryMetadata {
   type: string;
