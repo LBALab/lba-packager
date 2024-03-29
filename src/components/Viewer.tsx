@@ -41,7 +41,7 @@ export default function Viewer() {
   const [hqrInfo, setHQRInfo] = React.useState<HQRInfo | null>(null);
   const [dataTypes, setDataTypes] = React.useState<DataTypes | null>(null);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
   const [winHeight, setWinHeight] = React.useState(window.innerHeight);
 
   const handleResize = () => {
